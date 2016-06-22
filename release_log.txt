@@ -1,0 +1,54 @@
+0.53:
+
+* Fixed TTS setting
+* Auto-selection of new language when added
+* Prevented words not saving if the user went back after saving rather than explicitly pressing second save button
+* Tweaks to spaced repetition algorithm
+
+0.52:
+
+* Added automatic source update check before searching
+* Fixed ordering of sources not being saved when studying multiple languages
+* Improved dictionary.com source functionality
+
+0.51:
+
+* Added priorities to sources so important ones are first by default
+* Tweaked tutorial text
+
+0.5:
+
+* Added English language study support
+* Added tutorial for first time users
+* Added automatically selected sources
+* Fixed database error while studying
+* Updated performance graph to better reflect remembered/forgot ratios
+* Removed definition->word vocabulary recall test
+
+0.42:
+
+* Fix for rare database error during studying
+
+0.41:
+
+* Attempt at fixing a rare sync error
+
+0.4:
+
+* Added support for saving definitions
+* Added tests for definitions
+
+0.3:
+
+* Made hint text easier to understand
+* Renamed "information sources" to "sources"
+* Added "edit sources" button to search page
+* Added hint to encourage searching when user has no words
+
+0.2:
+
+* Initial public beta release
+
+0.1:
+
+* Private alpha release

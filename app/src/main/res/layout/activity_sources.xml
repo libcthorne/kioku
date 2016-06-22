@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dslv="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/sources_container">
+
+    <!-- List whose dataset is defined in code with an adapter -->
+    <com.mobeta.android.dslv.DragSortListView
+        android:id="@+id/sources_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        dslv:float_background_color="#eeeeee" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_sources_hint"
+        android:text="@string/add_sources_hint"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:layout_margin="20dp"/>
+</RelativeLayout>

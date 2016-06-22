@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="preferenceScreen">
+
+    <CheckBoxPreference android:key="pref_source_enabled"
+        android:title="Enable"
+        android:summary="Use this source when searching for words" />
+
+</PreferenceScreen>

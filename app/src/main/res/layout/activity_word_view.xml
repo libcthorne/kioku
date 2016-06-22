@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/word_view_container"
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:paddingBottom="15dp"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"> <!-- make parent focusable so first EditText is not focused on startup -->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#108DB6">
+                <TextView
+                    android:id="@+id/first_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:textColor="#fff"
+                    android:visibility="gone"
+                    android:text="Here you can check the information you just saved. You can also go back and select more or add your own manually using the plus buttons. Once you have everything you want, press the tick button in the top right hand corner to save your new word."/>
+            </RelativeLayout>
+
+            <!-- Word forms -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Word forms:"
+                android:textSize="20sp">
+            </TextView>
+
+            <LinearLayout
+                android:id="@+id/view_word_forms"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_margin="10dp" >
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add_word_form_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/add_word_information_button_height"
+                android:text="+"
+                android:background="#108DB6"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/add_word_information_button_font_size"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <!-- Translations -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Translations:"
+                android:textSize="20sp">
+            </TextView>
+
+            <LinearLayout
+                android:id="@+id/view_translations"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_margin="10dp" >
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add_translation_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/add_word_information_button_height"
+                android:text="+"
+                android:background="#108DB6"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/add_word_information_button_font_size"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <!-- Definitions -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Definitions:"
+                android:textSize="20sp">
+            </TextView>
+
+            <LinearLayout
+                android:id="@+id/view_definitions"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_margin="10dp" >
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add_definition_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/add_word_information_button_height"
+                android:text="+"
+                android:background="#108DB6"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/add_word_information_button_font_size"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <!-- Images -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Images:"
+                android:textSize="20sp">
+            </TextView>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+                <LinearLayout
+                    android:id="@+id/view_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:gravity="right">
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/add_image_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/add_word_information_button_height"
+                android:text="+"
+                android:background="#108DB6"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/add_word_information_button_font_size"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <!-- Sentences -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Sentences:"
+                android:textSize="20sp">
+            </TextView>
+
+            <LinearLayout
+                android:id="@+id/view_sentences"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_margin="10dp" >
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add_sentence_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/add_word_information_button_height"
+                android:text="+"
+                android:background="#108DB6"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/add_word_information_button_font_size"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

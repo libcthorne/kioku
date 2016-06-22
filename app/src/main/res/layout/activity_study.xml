@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tests_due_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="What do you want to study?"/>
+
+        <TextView
+            android:id="@+id/tests_done_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="Looks like you're done for today!"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/word_information_tests"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp">
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#108DB6">
+
+        <TextView
+            android:id="@+id/first_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="Kioku tests you using spaced repetition. This means that you'll have a certain number of words to study here each day. Try studying by pressing one of the above buttons."/>
+
+        <TextView
+            android:id="@+id/second_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="Well done! Try and study as often as possible to make sure you remember your words. Press back to continue with the tutorial."/>
+    </RelativeLayout>
+</RelativeLayout>

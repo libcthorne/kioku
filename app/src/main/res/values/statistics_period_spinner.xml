@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="statistics_periods_array">
+    <item>This week</item>
+    <item>This month</item>
+    <item>This year</item>
+    <item>All time</item>
+</string-array>
+</resources>

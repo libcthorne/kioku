@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="preferenceScreen">
+
+    <Preference
+        android:key="pref_word_sources"
+        android:title="@string/word_information_sources_title" />
+
+    <!--<CheckBoxPreference
+        android:key="pref_romaji"
+        android:title="Romaji"
+        android:summary="Show romaji next to kana"
+        android:defaultValue="false" />-->
+
+</PreferenceScreen>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--<item android:id="@+id/edit_word_button"
+        android:icon="@drawable/ic_edit_white_48dp"
+        android:title="Edit"
+        app:showAsAction="always" />-->
+
+    <!--<item android:id="@+id/search_add_button"
+        android:icon="@drawable/ic_search_add_white_48dp"
+        android:actionLayout="@layout/action_search_add"
+        app:showAsAction="always" />-->
+
+    <item
+        android:id="@+id/search_add_button"
+        android:icon="@drawable/ic_search_add_white_48dp"
+        android:title="Search"
+        app:showAsAction="always">
+        <menu android:id="@+id/test_menu">
+            <!-- populated in Java -->
+        </menu>
+    </item>
+
+    <item android:id="@+id/delete_word_button"
+        android:icon="@drawable/ic_delete_white_48dp"
+        android:title="Delete"
+        app:showAsAction="ifRoom" />
+
+</menu>

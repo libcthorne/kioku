@@ -1,0 +1,189 @@
+<RelativeLayout
+    android:id="@+id/main_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/background_text_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- TextViews added programatically -->
+        <!-- Currently not used -->
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_centerInParent="true">
+        <GridLayout
+            android:id="@+id/button_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:padding="5dp"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/search_button"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/ic_search_white_128dp"
+                android:background="#108DB6"
+                android:scaleType="fitCenter"
+                android:padding="10dp"
+                android:layout_margin="2dp"/>
+
+            <RelativeLayout android:id="@+id/study_button">
+
+                <ImageButton
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/ic_school_white_128dp"
+                    android:background="#108DB6"
+                    android:scaleType="fitCenter"
+                    android:clickable="false"
+                    android:padding="10dp"
+                    android:layout_margin="2dp" />
+
+                <TextView
+                    android:id="@+id/study_items_due_count"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:gravity="top|right"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp"
+                    android:padding="5dp"
+                    android:text="10" /> <!-- 10 set here for UI editor preview purposes. "✓" used for 0. -->
+
+            </RelativeLayout>
+
+            <!--<Button
+                android:id="@+id/mode_button"
+                android:layout_columnSpan="2"
+                android:layout_gravity="fill_horizontal"
+                android:layout_height="40dp"
+                android:layout_width="40dp"
+                android:text="Japanese"
+                android:textColor="#fff"
+                android:background="#108DB6"
+                android:scaleType="fitCenter"
+                android:padding="10dp"
+                android:layout_margin="2dp" />-->
+
+            <RelativeLayout
+                android:layout_columnSpan="2"
+                android:layout_width="240dp"
+                android:layout_height="40dp"
+                android:layout_gravity="fill_horizontal"
+                android:background="#108DB6"
+                android:layout_margin="2dp" >
+
+                <Spinner
+                    android:id="@+id/language_spinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="0dp"
+                    android:background="@null" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_arrow_drop_down_white_24dp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_columnSpan="2"
+                android:layout_gravity="fill_horizontal"
+                android:layout_width="240dp"
+                android:layout_height="80dp">
+                <ImageButton
+                    android:id="@+id/browse_button"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:src="@drawable/ic_view_list_white_128dp"
+                    android:background="#108DB6"
+                    android:scaleType="fitCenter"
+                    android:padding="10dp"
+                    android:layout_margin="2dp" />
+
+                <ImageButton
+                    android:id="@+id/statistics_button"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:src="@drawable/ic_insert_chart_white_128dp"
+                    android:background="#108DB6"
+                    android:scaleType="fitCenter"
+                    android:padding="10dp"
+                    android:layout_margin="2dp" />
+
+                <ImageButton
+                    android:id="@+id/settings_button"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:src="@drawable/ic_settings_white_128dp"
+                    android:background="#108DB6"
+                    android:scaleType="fitCenter"
+                    android:padding="10dp"
+                    android:layout_margin="2dp" />
+            </LinearLayout>
+        </GridLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/hint_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#108DB6">
+
+        <TextView
+            android:id="@+id/add_words_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="Start by pressing the search button."/>
+
+        <TextView
+            android:id="@+id/study_words_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="Well done on adding your first word! The next step is to study it. Press the study button when you're ready."/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/final_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/final_hint_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="#108DB6"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:text="@string/tutorial_final_hint"/>
+    </RelativeLayout>
+</RelativeLayout>

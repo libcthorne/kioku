@@ -1,0 +1,22 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">100dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="add_word_information_button_height">35dp</dimen>
+    <dimen name="word_view_delete_button_width">30dp</dimen>
+    <dimen name="add_word_information_button_font_size">18sp</dimen>
+    <dimen name="word_view_image_width">100dp</dimen>
+    <dimen name="word_view_image_height">100dp</dimen>
+    <dimen name="word_view_image_min_width">100dp</dimen>
+    <dimen name="word_view_image_horizontal_margin">5dp</dimen>
+    <dimen name="word_view_image_delete_button_vertical_margin">5dp</dimen>
+    <dimen name="word_view_image_top_margin">5dp</dimen>
+    <dimen name="word_view_image_max_width">128dp</dimen>
+    <dimen name="word_view_image_max_height">256dp</dimen>
+    <dimen name="custom_search_padding">20dp</dimen>
+    <dimen name="quad_stack_fragment_padding">40dp</dimen>
+    <dimen name="quad_stack_up_down_button_width">80dp</dimen>
+    <dimen name="up_down_button_padding">8dp</dimen>
+    <dimen name="quad_stack_hint_padding">10dp</dimen>
+</resources>

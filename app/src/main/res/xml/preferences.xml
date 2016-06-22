@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="preferenceScreen">
+    <PreferenceCategory
+        android:title="@string/pref_languages_title"
+        android:key="pref_languages">
+        <!--<Preference
+            android:key="pref_english"
+            android:title="English"/>-->
+        <!--<Preference
+            android:key="pref_japanese"
+            android:title="Japanese"/>-->
+    </PreferenceCategory>
+
+    <!-- For users signed in -->
+    <PreferenceCategory
+        android:title="@string/pref_account_title"
+        android:key="pref_account_settings_signed_in">
+        <Preference
+            android:key="pref_account_manage"
+            android:title="Signed in"
+            android:summary="example@example.com"/>
+        <Preference
+            android:key="pref_account_switch"
+            android:title="Switch account" />
+    </PreferenceCategory>
+    <!--<PreferenceCategory
+        android:title="Sync"
+        android:key="pref_sync">
+        <CheckBoxPreference
+            android:key="pref_auto_sync"
+            android:title="Automatic sync"
+            android:summary="Last synced: 12/12/15 12:01:34"
+            android:defaultValue="true" />
+        <Preference
+            android:key="pref_force_sync"
+            android:title="Start sync"
+            android:summary="Start an immediate sync"/>
+    </PreferenceCategory>-->
+
+    <!-- For users not signed in -->
+    <PreferenceCategory
+        android:title="@string/pref_account_title"
+        android:key="pref_account_settings_not_signed_in">
+        <Preference
+            android:key="pref_account_create"
+            android:title="Create account"
+            android:summary="Create an account to store your words online" />
+
+        <Preference
+            android:key="pref_account_login"
+            android:title="Login"
+            android:summary="Login to an existing account" />
+    </PreferenceCategory>
+
+    <!--<PreferenceCategory
+        android:title="@string/pref_notifications_title"
+        android:key="pref_notifications_settings">
+        <CheckBoxPreference
+            android:key="pref_notifications_enabled"
+            android:title="Study notifications"
+            android:summary="Receive notifications when there are words to study"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="pref_notifications_vibrate"
+            android:title="@string/pref_notifications_vibrate"
+            android:summary="@string/pref_notifications_vibrate_summ"
+            android:defaultValue="true" />
+    </PreferenceCategory>-->
+
+
+    <PreferenceCategory
+        android:title="@string/pref_sound_title"
+        android:key="pref_sound_settings">
+        <CheckBoxPreference
+            android:key="pref_tts_enabled"
+            android:title="Text-to-speech (Experimental)"
+            android:summary="Use text-to-speech for studying"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="pref_sfx_enabled"
+            android:title="Sound effects"
+            android:summary="Play sound effects for correct/incorrect answers when studying"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+
+    <!--<PreferenceCategory
+        android:title="@string/pref_help_title"
+        android:key="pref_help_settings">
+        <Preference
+            android:key="pref_see_tutorial"
+            android:title="Tutorial" />
+    </PreferenceCategory>-->
+
+    <PreferenceCategory
+        android:title="@string/pref_dev_title"
+        android:key="pref_dev_settings">
+        <Preference
+            android:key="pref_dev_reset_next_due"
+            android:title="Reset tests next due"
+            android:summary="Reset all test next due dates to now for all local accounts"/>
+        <Preference
+            android:key="pref_dev_reset_tests"
+            android:title="Delete test information"
+            android:summary="Delete all test information for all local accounts"/>
+        <Preference
+            android:key="pref_force_clean_sync"
+            android:title="Clean sync"
+            android:summary="Start an immediate sync that removes all local unsynced changes"/>
+        <Preference
+            android:key="pref_unsee_intro"
+            android:title="Unsee intro" />
+        <Preference
+            android:key="pref_unsee_hints"
+            android:title="Unsee hints" />
+    </PreferenceCategory>
+</PreferenceScreen>

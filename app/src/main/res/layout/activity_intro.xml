@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#108DB6">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp" />
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/progress"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        app:radius="4dp"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent" />
+
+    <RelativeLayout
+        android:id="@+id/left_button"
+        android:gravity="left"
+        android:layout_height="match_parent"
+        android:layout_width="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:alpha="1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_keyboard_arrow_left_white_24dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/right_button"
+        android:gravity="right"
+        android:layout_height="match_parent"
+        android:layout_width="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:alpha="1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_keyboard_arrow_right_white_24dp" />
+    </RelativeLayout>
+</RelativeLayout>
