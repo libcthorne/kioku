@@ -7,10 +7,6 @@
 app/build
 /captures
 .svn
-screenshots
 *.jks
-*.xcf
 kioku-server
-svgs
 *.class
-svn-add-rm.sh
