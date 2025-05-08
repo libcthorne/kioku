@@ -1,45 +1,53 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    namespace 'me.cthorne.kioku' // Required in AGP 8+
+    compileSdk 33 // Upgrade to latest stable; 23 is too old for AGP 8.x
 
     defaultConfig {
         applicationId "me.cthorne.kioku"
-        minSdkVersion 14
-        targetSdkVersion 23
+        minSdk 14
+        targetSdk 33
         versionCode 52
         versionName "0.52"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
-    compile 'com.viewpagerindicator:library:2.4.1@aar'
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'com.android.support:design:23.1.0'
-    compile 'com.loopj.android:android-async-http:1.4.9'
-    compile 'com.squareup.picasso:picasso:2.1.1'
-    compile 'com.j256.ormlite:ormlite-core:4.48'
-    compile 'com.j256.ormlite:ormlite-android:4.48'
-    compile 'com.github.PhilJay:MPAndroidChart:v2.2.0'
-    compile 'joda-time:joda-time:2.3'
-    compile 'com.github.castorflex.verticalviewpager:library:19.0.1'
-    compile files('libs/Android-Audio.jar')
-    compile project(':libraries:drag-sort-listview:library')
-    // For testing
-    androidTestCompile 'com.android.support.test:runner:0.4.1'
-    androidTestCompile 'com.android.support.test:rules:0.4.1'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
-    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.1'
-    androidTestCompile 'com.android.support.test.espresso:espresso-web:2.2.1'
-    androidTestCompile 'com.android.support:support-annotations:23.1.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
+    implementation 'com.viewpagerindicator:library:2.4.1@aar'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'com.squareup.picasso:picasso:2.8'
+    implementation 'com.j256.ormlite:ormlite-core:4.48'
+    implementation 'com.j256.ormlite:ormlite-android:4.48'
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.0'
+    implementation 'joda-time:joda-time:2.3'
+    implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
+    implementation files('libs/Android-Audio.jar')
+    implementation project(':libraries:drag-sort-listview:library')
+
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test:rules:1.4.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-web:3.4.0'
+    androidTestImplementation 'androidx.annotation:annotation:1.2.0'
 }

@@ -2,11 +2,17 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Kioku.iml" filepath="$PROJECT_DIR$/Kioku.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libraries/drag-sort-listview/drag-sort-listview.iml" filepath="$PROJECT_DIR$/libraries/drag-sort-listview/drag-sort-listview.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libraries/libraries.iml" filepath="$PROJECT_DIR$/libraries/libraries.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libraries/drag-sort-listview/library/library.iml" filepath="$PROJECT_DIR$/libraries/drag-sort-listview/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kioku.iml" filepath="$PROJECT_DIR$/.idea/modules/kioku.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/kioku.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/kioku.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/kioku.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/kioku.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/kioku.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/kioku.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/kioku.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/kioku.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/kioku.libraries.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/kioku.libraries.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/drag-sort-listview/kioku.libraries.drag-sort-listview.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/drag-sort-listview/kioku.libraries.drag-sort-listview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/drag-sort-listview/library/kioku.libraries.drag-sort-listview.library.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/drag-sort-listview/library/kioku.libraries.drag-sort-listview.library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/drag-sort-listview/library/kioku.libraries.drag-sort-listview.library.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/drag-sort-listview/library/kioku.libraries.drag-sort-listview.library.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/drag-sort-listview/library/kioku.libraries.drag-sort-listview.library.main.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/drag-sort-listview/library/kioku.libraries.drag-sort-listview.library.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/drag-sort-listview/library/kioku.libraries.drag-sort-listview.library.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/drag-sort-listview/library/kioku.libraries.drag-sort-listview.library.unitTest.iml" />
     </modules>
   </component>
 </project>
