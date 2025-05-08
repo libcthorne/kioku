@@ -2,8 +2,8 @@ package me.cthorne.kioku;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.viewpagerindicator.CirclePageIndicator;
+import com.google.android.material.tabs.TabLayout;
 
 import me.cthorne.kioku.intro.IntroFragmentAdapter;
 import pl.droidsonroids.gif.GifDrawable;
@@ -42,10 +42,10 @@ public class IntroActivity extends AppCompatActivity {
         if (manualStart)
             lastPage = true; // just show "ok" instead of "skip" if the user came here manually
 
-        final ViewPager viewPager = (ViewPager)findViewById(R.id.pager);
+        final ViewPager viewPager = findViewById(R.id.pager);
         final IntroFragmentAdapter adapter = new IntroFragmentAdapter(getSupportFragmentManager());
 
-        leftButton = (RelativeLayout)findViewById(R.id.left_button);
+        leftButton = findViewById(R.id.left_button);
         leftButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -56,7 +56,7 @@ public class IntroActivity extends AppCompatActivity {
         });
         leftButton.setVisibility(View.INVISIBLE); // hide on first page
 
-        rightButton = (RelativeLayout)findViewById(R.id.right_button);
+        rightButton = findViewById(R.id.right_button);
         rightButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -108,8 +108,8 @@ public class IntroActivity extends AppCompatActivity {
                             return;
                     }
 
-                    LinearLayout container = (LinearLayout) findViewById(containerId);
-                    GifImageView gifImageView = (GifImageView) container.findViewById(R.id.step_gif);
+                    LinearLayout container = findViewById(containerId);
+                    GifImageView gifImageView = container.findViewById(R.id.step_gif);
                     GifDrawable gifDrawable = (GifDrawable)gifImageView.getDrawable();
                     gifDrawable.setSpeed(1.3f);
                     gifDrawable.reset();
@@ -125,8 +125,8 @@ public class IntroActivity extends AppCompatActivity {
             }
         });
 
-        CirclePageIndicator progressIndicator = (CirclePageIndicator)findViewById(R.id.progress);
-        progressIndicator.setViewPager(viewPager);
+        TabLayout tabLayout = findViewById(R.id.progress);
+        tabLayout.setupWithViewPager(viewPager, true);
     }
 
     @Override
@@ -137,14 +137,15 @@ public class IntroActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.skip_button:
-            case R.id.ok_button:
-                finishIntro();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.skip_button) {
+            finishIntro();
+            return true;
+        } else if (id == R.id.ok_button) {
+            finishIntro();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void finishIntro() {

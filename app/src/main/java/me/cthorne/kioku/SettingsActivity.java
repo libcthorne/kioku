@@ -9,11 +9,12 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivityCompat;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.table.TableUtils;
 
@@ -25,19 +26,19 @@ import me.cthorne.kioku.settings.LanguageSettingsActivity;
 import me.cthorne.kioku.test.WordInformationTestAnswer;
 import me.cthorne.kioku.test.WordInformationTestPerformance;
 import me.cthorne.kioku.words.Word;
+import me.cthorne.kioku.orm.OrmLiteBaseActivityCompat;
 
 /**
- * Created by chris on 18/12/15.
+ * Created by chris on 24/01/16.
  */
 public class SettingsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> {
-
-    private static DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dbHelper = getHelper();
+        // Display up button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction()
@@ -45,7 +46,25 @@ public class SettingsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
                 .commit();
     }
 
-    public static class SettingsFragment extends PreferenceFragment {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_settings, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public class SettingsFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -60,7 +79,7 @@ public class SettingsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
             PreferenceCategory languagePreferences = (PreferenceCategory)findPreference("pref_languages");
 
             try {
-                for (final SelectedWordLanguage language : dbHelper.getUserLanguages()) {
+                for (final SelectedWordLanguage language : ((SettingsActivity)getActivity()).getHelper().getUserLanguages()) {
                     Preference userLanguagePreference = new Preference(context);
                     userLanguagePreference.setTitle(language.getLanguage().toString());
 
@@ -119,7 +138,7 @@ public class SettingsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
                                     public void onClick(DialogInterface dialog, int which) {
                                         try {
                                             // clear saved details
-                                            KiokuServerClient.setLoggedIn(context, dbHelper, "", "", false, new KiokuServerClient.LoginHandler() {
+                                            KiokuServerClient.setLoggedIn(context, ((SettingsActivity)getActivity()).getHelper(), "", "", false, new KiokuServerClient.LoginHandler() {
                                                 @Override
                                                 public void onFinish() {
                                                     Intent intent = new Intent(context, LoginActivity.class);
@@ -163,7 +182,7 @@ public class SettingsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
                                     public void onClick(DialogInterface dialog, int which) {
                                         // Clear all synced local tables first
                                         try {
-                                            TableUtils.clearTable(dbHelper.getConnectionSource(), Word.class);
+                                            TableUtils.clearTable(((SettingsActivity)getActivity()).getHelper().getConnectionSource(), Word.class);
 
                                             // Sync
                                             //KiokuSync.startSync(context);
@@ -259,7 +278,7 @@ public class SettingsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     try {
-                                        Dao<WordInformationTestPerformance, Integer> wordInformationTestPerformanceDao = dbHelper.getWordInformationTestPerformanceDao();
+                                        Dao<WordInformationTestPerformance, Integer> wordInformationTestPerformanceDao = ((SettingsActivity)getActivity()).getHelper().getWordInformationTestPerformanceDao();
 
                                         for (WordInformationTestPerformance performance : wordInformationTestPerformanceDao.queryForAll()) {
                                             performance.resetRepetitionValues();
@@ -290,8 +309,8 @@ public class SettingsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     try {
-                                        TableUtils.clearTable(dbHelper.getConnectionSource(), WordInformationTestPerformance.class);
-                                        TableUtils.clearTable(dbHelper.getConnectionSource(), WordInformationTestAnswer.class);
+                                        TableUtils.clearTable(((SettingsActivity)getActivity()).getHelper().getConnectionSource(), WordInformationTestPerformance.class);
+                                        TableUtils.clearTable(((SettingsActivity)getActivity()).getHelper().getConnectionSource(), WordInformationTestAnswer.class);
                                     } catch (SQLException e) {
                                         e.printStackTrace();
                                     }
@@ -319,6 +338,114 @@ public class SettingsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
                     return true;
                 }
             });
+
+            // Clear data
+            Preference clearData = preferenceScreen.findPreference("pref_clear_data");
+            clearData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    new AlertDialog.Builder(context)
+                            .setTitle("Clear data")
+                            .setMessage("Are you sure you want to clear all data? This cannot be undone.")
+                            .setNegativeButton(android.R.string.no, null)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    try {
+                                        ((SettingsActivity)getActivity()).getHelper().clearAllTables();
+
+                                        Toast.makeText(context, "Data cleared", Toast.LENGTH_SHORT).show();
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(context, "Error clearing data", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }).show();
+
+                    return true;
+                }
+            });
+
+            // Clear cache
+            Preference clearCache = preferenceScreen.findPreference("pref_clear_cache");
+            clearCache.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    new AlertDialog.Builder(context)
+                            .setTitle("Clear cache")
+                            .setMessage("Are you sure you want to clear the cache? This cannot be undone.")
+                            .setNegativeButton(android.R.string.no, null)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    try {
+                                        ((SettingsActivity)getActivity()).getHelper().clearCache();
+
+                                        Toast.makeText(context, "Cache cleared", Toast.LENGTH_SHORT).show();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(context, "Error clearing cache", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }).show();
+
+                    return true;
+                }
+            });
+
+            // Export data
+            Preference exportData = preferenceScreen.findPreference("pref_export_data");
+            exportData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    new AlertDialog.Builder(context)
+                            .setTitle("Export data")
+                            .setMessage("Are you sure you want to export all data? This may take a while.")
+                            .setNegativeButton(android.R.string.no, null)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    try {
+                                        ((SettingsActivity)getActivity()).getHelper().exportData();
+
+                                        Toast.makeText(context, "Data exported", Toast.LENGTH_SHORT).show();
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(context, "Error exporting data", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }).show();
+
+                    return true;
+                }
+            });
+
+            // Import data
+            Preference importData = preferenceScreen.findPreference("pref_import_data");
+            importData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    new AlertDialog.Builder(context)
+                            .setTitle("Import data")
+                            .setMessage("Are you sure you want to import data? This will overwrite all existing data.")
+                            .setNegativeButton(android.R.string.no, null)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    try {
+                                        ((SettingsActivity)getActivity()).getHelper().importData();
+
+                                        Toast.makeText(context, "Data imported", Toast.LENGTH_SHORT).show();
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(context, "Error importing data", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }).show();
+
+                    return true;
+                }
+            });
         }
     }
 
@@ -329,6 +456,4 @@ public class SettingsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
             addPreferencesFromResource(R.xml.preferences_manage_account);
         }
     }
-
-
 }

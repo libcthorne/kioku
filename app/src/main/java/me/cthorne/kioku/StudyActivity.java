@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivityCompat;
+import me.cthorne.kioku.orm.OrmLiteBaseActivityCompat;
 
 import java.util.ArrayList;
 import java.util.Map;

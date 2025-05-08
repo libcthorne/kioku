@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivityCompat;
+import me.cthorne.kioku.orm.OrmLiteBaseActivityCompat;
 
 import im.delight.android.audio.SoundManager;
 import me.cthorne.kioku.DatabaseHelper;
@@ -111,17 +111,16 @@ public class WordInformationTestActivity extends OrmLiteBaseActivityCompat<Datab
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.edit_word_button:
-                if (currentWordInformation != null) {
-                    Intent wordViewIntent = new Intent(this, WordViewActivity.class);
-                    wordViewIntent.putExtra("wordId", currentWordInformation.getWord().id);
-                    startActivity(wordViewIntent);
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.edit_word_button) {
+            if (currentWordInformation != null) {
+                Intent wordViewIntent = new Intent(this, WordViewActivity.class);
+                wordViewIntent.putExtra("wordId", currentWordInformation.getWord().id);
+                startActivity(wordViewIntent);
+            }
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void playCorrectSound() {

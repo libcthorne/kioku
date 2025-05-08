@@ -3,7 +3,7 @@ package me.cthorne.kioku;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,10 +24,7 @@ import me.cthorne.kioku.auth.UserAccount;
 public class KiokuServerClient {
 
 
-    private static final String BASE_URL = BuildConfig.DEBUG ?
-                                            "http://kioku.cthorne.me:4000/" : // DEBUG URL 1
-                                            //"http://192.168.0.3:3000/" : // DEBUG URL 2
-                                            "http://kioku.cthorne.me/"; // RELEASE URL
+    private static final String BASE_URL = "http://kioku.cthorne.me/";
 
     //"http://192.168.1.138:3000/";
     //"http://192.168.0.31:3000/";

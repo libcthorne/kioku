@@ -58,5 +58,6 @@
     <string name="registration_password_too_short_error">Password must be at least %1$d characters</string>
     <string name="add_languages_none_selected_error">Please select at least one language</string>
     <string name="search_no_sources_error">You need at least one source to use search</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

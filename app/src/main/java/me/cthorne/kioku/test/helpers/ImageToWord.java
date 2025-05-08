@@ -27,7 +27,7 @@ public class ImageToWord {
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         String imageFileName = new String(wordInformation.getInformationBytes());
-        Picasso.with(context).load(Utils.mediaFile(context, imageFileName)).into(imageView);
+        Picasso.get().load(Utils.mediaFile(context, imageFileName)).into(imageView);
 
         return imageView;
     }

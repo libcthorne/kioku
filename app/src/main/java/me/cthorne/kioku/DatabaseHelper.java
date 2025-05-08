@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.io.File;
 
 import me.cthorne.kioku.auth.UserAccount;
 import me.cthorne.kioku.infosources.SelectedWordInformationSource;
@@ -716,5 +717,62 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 where.eq("informationType", informationType));
 
         return qb.query();
+    }
+
+    /**
+     * Clears all tables in the database
+     */
+    public void clearAllTables() throws SQLException {
+        TableUtils.clearTable(getConnectionSource(), SelectedWordLanguage.class);
+        TableUtils.clearTable(getConnectionSource(), SelectedWordInformationSource.class);
+        TableUtils.clearTable(getConnectionSource(), WordInformationSource.class);
+        TableUtils.clearTable(getConnectionSource(), WordInformationTestAnswer.class);
+        TableUtils.clearTable(getConnectionSource(), WordInformationTestPerformance.class);
+        TableUtils.clearTable(getConnectionSource(), WordInformation.class);
+        TableUtils.clearTable(getConnectionSource(), Word.class);
+        TableUtils.clearTable(getConnectionSource(), UserAccount.class);
+    }
+
+    /**
+     * Clears the cache directory
+     */
+    public void clearCache() {
+        File cacheDir = context.getCacheDir();
+        if (cacheDir != null && cacheDir.exists()) {
+            deleteDir(cacheDir);
+        }
+    }
+
+    private boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (String child : children) {
+                boolean success = deleteDir(new File(dir, child));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if (dir != null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Exports data to a file
+     */
+    public void exportData() throws SQLException {
+        // TODO: Implement data export functionality
+        throw new SQLException("Data export not implemented yet");
+    }
+
+    /**
+     * Imports data from a file
+     */
+    public void importData() throws SQLException {
+        // TODO: Implement data import functionality
+        throw new SQLException("Data import not implemented yet");
     }
 }

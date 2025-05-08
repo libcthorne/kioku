@@ -1,25 +1,28 @@
 package me.cthorne.kioku.languages;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivityCompat;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import me.cthorne.kioku.DatabaseHelper;
 import me.cthorne.kioku.KiokuServerClient;
 import me.cthorne.kioku.MainActivity;
 import me.cthorne.kioku.R;
 import me.cthorne.kioku.words.WordLanguage;
+import me.cthorne.kioku.orm.OrmLiteBaseActivityCompat;
 
 /**
  * Created by chris on 06/02/16.
@@ -82,16 +85,16 @@ public class AddLanguagesActivity extends OrmLiteBaseActivityCompat<DatabaseHelp
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.add_languages_button:
-                saveSelectedLanguages();
-                return true;
+        int id = item.getItemId();
+        if (id == R.id.add_languages_button) {
+            saveSelectedLanguages();
+            return true;
         }
-
-        return(super.onOptionsItemSelected(item));
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void saveSelectedLanguages() {

@@ -1,8 +1,8 @@
 package me.cthorne.kioku.test.stacks.quadstack;
 
 import android.content.Context;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ViewPager;
+import androidx.core.view.MotionEventCompat;
+import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -27,9 +27,9 @@ public class QuadStackCardViewPager extends ViewPager {
 
     private final static float SWIPE_THRESHOLD = 20.0f;
 
-    public final static int TAG_QUESTION = 0;
-    public final static int TAG_ANSWER = 1;
-    public final static int TAG_LOADING = 2;
+    public final static Integer TAG_QUESTION = 0;
+    public final static Integer TAG_ANSWER = 1;
+    public final static Integer TAG_LOADING = 2;
 
     public QuadStackCardViewPager(Context context) {
         super(context);
@@ -55,7 +55,7 @@ public class QuadStackCardViewPager extends ViewPager {
                 // This page is way off-screen to the left.
             } else if (position <= 1) { // [-1,1]
                 // Counteract the default slide transition for answer (i.e. stop it moving)
-                if (view.getTag() == TAG_ANSWER)
+                if (TAG_ANSWER.equals(view.getTag()))
                     view.setTranslationX(view.getWidth() * -position);
             } else { // (1,+Infinity]
                 // This page is way off-screen to the right.

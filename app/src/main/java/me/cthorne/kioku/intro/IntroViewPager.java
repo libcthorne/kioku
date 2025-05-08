@@ -1,8 +1,8 @@
 package me.cthorne.kioku.intro;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * Created by chris on 21/02/16.

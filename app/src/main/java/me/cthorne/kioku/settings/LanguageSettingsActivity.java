@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
 
 import me.cthorne.kioku.R;
 import me.cthorne.kioku.infosources.SourcesActivity;

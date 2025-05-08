@@ -6,8 +6,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import com.google.android.material.tabs.TabLayout;
+import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -17,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivityCompat;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.SqlType;
 import com.j256.ormlite.misc.TransactionManager;
@@ -39,6 +38,7 @@ import me.cthorne.kioku.search.SearchWebViewFragmentAdapter;
 import me.cthorne.kioku.words.Word;
 import me.cthorne.kioku.words.WordInformation;
 import me.cthorne.kioku.words.WordInformationType;
+import me.cthorne.kioku.orm.OrmLiteBaseActivityCompat;
 
 /**
  * Created by chris on 31/10/15.
@@ -46,6 +46,7 @@ import me.cthorne.kioku.words.WordInformationType;
 public class SearchResultsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> {
 
     private static final int SEARCH_WORD_RESULT_ID = 0;
+    private static final String TAG = "kioku-search-results";
 
     public AtomicInteger pendingDownloads;
     private boolean waitingForPending;
@@ -126,70 +127,34 @@ public class SearchResultsActivity extends OrmLiteBaseActivityCompat<DatabaseHel
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        /*
-        // Page change handling
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-            }
-        });
-        */
-
         if (MainActivity.isInTutorial())
             firstHint.setVisibility(View.VISIBLE);
     }
 
     @Override
-    protected void onDestroy() {
-        // Remove word if the user does not choose to save it
-        // Note: removed so going back after initial save does not delete word
-        /*try {
-            if (!existingWord && word != null) {
-                Log.d("kioku-search", "remove word; user doesn't want it");
-                getHelper().getWordDao().delete(word);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }*/
-
+    public void onDestroy() {
         super.onDestroy();
-
-        // Web views must be removed manually
-        for (SearchWebViewFragment fragment : mAdapter.getSavedWebViewFragments().values())
-            fragment.getWebView().destroy();
+        if (mAdapter != null) {
+            // Clean up WebViews in fragments
+            for (SearchWebViewFragment fragment : mAdapter.getSavedWebViewFragments().values()) {
+                fragment.getWebView().destroy();
+            }
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         activeActivity = this;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SEARCH_WORD_RESULT_ID) {
-            if (resultCode == Activity.RESULT_CANCELED) { // user came back from WordViewActivity; need to delete word/information
-                /*try {
-                    if (!existingWord) {
-                        // For newly created words, just delete the word
-                        Dao<Word, Integer> wordDao = getHelper().getWordDao();
-                        wordDao.delete(word);
-                    } else {
-                        // For existing words, delete only the newly added word information
-                        Dao<WordInformation, Integer> wordInformationDao = getHelper().getWordInformationDao();
-                        for (WordInformation wordInformation : wordInformations) {
-                            wordInformationDao.delete(wordInformation);
-                        }
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "Error removing word changes", Toast.LENGTH_SHORT).show();
-                }*/
-            } else if (resultCode == Activity.RESULT_OK) { // user saved word
-                existingWord = true; // word is now saved (set this to prevent it being removed in onDestroy)
+            if (resultCode == Activity.RESULT_CANCELED) {
+                // Handle cancellation
+            } else if (resultCode == Activity.RESULT_OK) {
+                existingWord = true;
                 setResult(Activity.RESULT_OK);
                 finish();
             }
@@ -205,32 +170,30 @@ public class SearchResultsActivity extends OrmLiteBaseActivityCompat<DatabaseHel
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            switch (keyCode) {
-                // Link back key with WebView
-                case KeyEvent.KEYCODE_BACK:
-                    handleBackPress();
-                    return true;
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                handleBackPress();
+                return true;
             }
-
         }
         return super.onKeyDown(keyCode, event);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                handleBackPress();
-                return true;
-            case R.id.save_word_button:
-                requestSaveWord();
-                return true;
-            case R.id.action_reload_page:
-                refreshCurrentFragment();
-                return true;
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        } else if (id == R.id.save_word_button) {
+            saveWord();
+            return true;
+        } else if (id == R.id.action_reload_page) {
+            refreshCurrentFragment();
+            return true;
         }
 
-        return(super.onOptionsItemSelected(item));
+        return super.onOptionsItemSelected(item);
     }
 
     public void saveWord() {
@@ -371,7 +334,6 @@ public class SearchResultsActivity extends OrmLiteBaseActivityCompat<DatabaseHel
     }
 
     private void handleBackPress() {
-        // Link home/up button with WebView
         SearchWebViewFragment fragment = mAdapter.getSavedWebViewFragment(mViewPager.getCurrentItem());
         if (fragment.getWebView().canGoBack())
             fragment.getWebView().goBack();

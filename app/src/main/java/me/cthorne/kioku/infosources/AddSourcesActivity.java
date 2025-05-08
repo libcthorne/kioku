@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivityCompat;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestHandle;
 import com.loopj.android.http.RequestParams;
@@ -32,6 +31,7 @@ import me.cthorne.kioku.KiokuServerClient;
 import me.cthorne.kioku.MainActivity;
 import me.cthorne.kioku.R;
 import me.cthorne.kioku.words.WordLanguage;
+import me.cthorne.kioku.orm.OrmLiteBaseActivityCompat;
 
 /**
  * Created by chris on 23/01/16.
@@ -148,16 +148,12 @@ public class AddSourcesActivity extends OrmLiteBaseActivityCompat<DatabaseHelper
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.add_sources_button:
-                addSelectedSources();
-                return true;
+        int id = item.getItemId();
+        if (id == R.id.add_sources_button) {
+            addSelectedSources();
+            return true;
         }
-
-        return(super.onOptionsItemSelected(item));
+        return super.onOptionsItemSelected(item);
     }
 
     private void processSources(JSONArray response) {

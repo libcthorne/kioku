@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivityCompat;
+import me.cthorne.kioku.orm.OrmLiteBaseActivityCompat;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -219,16 +219,14 @@ public class SearchActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.information_sources_settings:
-                Intent intent = new Intent(this, SourcesActivity.class);
-                intent.putExtra("language", MainActivity.currentLanguage.getValue());
-                startActivityForResult(intent, MANUAL_EDIT_SOURCES_RESULT_ID);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.information_sources_settings) {
+            Intent intent = new Intent(this, SourcesActivity.class);
+            intent.putExtra("language", MainActivity.currentLanguage.getValue());
+            startActivityForResult(intent, MANUAL_EDIT_SOURCES_RESULT_ID);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public boolean startSearch() {

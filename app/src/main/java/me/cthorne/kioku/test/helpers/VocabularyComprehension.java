@@ -89,7 +89,7 @@ public class VocabularyComprehension {
             imageParams.gravity = Gravity.CENTER;
             imageView.setLayoutParams(imageParams);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            Picasso.with(context).load(Utils.mediaFile(context, image.getFileName())).into(imageView);
+            Picasso.get().load(Utils.mediaFile(context, image.getFileName())).into(imageView);
 
             imageContainer.addView(imageView);
         }

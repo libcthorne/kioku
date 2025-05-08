@@ -29,7 +29,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivityCompat;
 import com.j256.ormlite.dao.Dao;
 
 import java.security.InvalidParameterException;
@@ -48,6 +47,7 @@ import me.cthorne.kioku.sync.SyncIntentService;
 import me.cthorne.kioku.test.tests.Tests;
 import me.cthorne.kioku.words.WordInformation;
 import me.cthorne.kioku.words.WordLanguage;
+import me.cthorne.kioku.orm.OrmLiteBaseActivityCompat;
 
 public class MainActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> {
 
@@ -203,7 +203,7 @@ public class MainActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         ttsShutdown();
     }
@@ -245,13 +245,13 @@ public class MainActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sync_button:
-                requestSync(this);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.sync_button) {
+            // Original logic for sync_button
+            requestSync(this);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -732,7 +732,7 @@ public class MainActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> {
 
     // Rect checking adapted from http://stackoverflow.com/a/8069887/5402565
     private class ButtonTouchListener implements View.OnTouchListener {
-        private Rect rect; // Bounds of the view
+        private Rect rect; // Bounds of the view's bounds
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {

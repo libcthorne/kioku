@@ -7,14 +7,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivityCompat;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
-import com.mobeta.android.dslv.DragSortListView;
+import com.woxthebox.draglistview.DragListView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,16 +22,17 @@ import java.util.concurrent.Callable;
 import me.cthorne.kioku.DatabaseHelper;
 import me.cthorne.kioku.R;
 import me.cthorne.kioku.words.WordLanguage;
+import me.cthorne.kioku.orm.OrmLiteBaseActivityCompat;
 
 /**
  * Created by chris on 23/01/16.
  */
-public class SourcesActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> implements AdapterView.OnItemClickListener {
+public class SourcesActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> {
 
     private static final int ADD_SOURCE_FOR_SEARCH_RESULT_ID = 10;
 
     private ArrayList<SelectedWordInformationSource> sources = new ArrayList<>();
-    private DragSortListView sourcesListView;
+    private DragListView sourcesListView;
     private SourcesListViewAdapter mArrayAdapter;
     private boolean editMode;
     private WordLanguage language;
@@ -58,21 +57,28 @@ public class SourcesActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> i
         mArrayAdapter = new SourcesListViewAdapter(this, sources);
 
         // List view
-        sourcesListView = (DragSortListView)findViewById(R.id.sources_listview);
+        sourcesListView = (DragListView)findViewById(R.id.sources_listview);
         sourcesListView.setDragEnabled(false); // drag enabled only in edit mode
-        sourcesListView.setAdapter(mArrayAdapter);
-        sourcesListView.setOnItemClickListener(this);
-        sourcesListView.setDropListener(new DragSortListView.DropListener() {
+        sourcesListView.setAdapter(mArrayAdapter, false);
+        
+        sourcesListView.setDragListListener(new DragListView.DragListListenerAdapter() {
             @Override
-            public void drop(int from, int to) {
-                SelectedWordInformationSource fromObj = sources.get(from);
+            public void onItemDragStarted(int position) {
+                // Optional: Handle drag start
+            }
 
-                sources.remove(from);
-                sources.add(to, fromObj);
-
-                mArrayAdapter.notifyDataSetChanged();
+            @Override
+            public void onItemDragEnded(int fromPosition, int toPosition) {
+                if (fromPosition != toPosition) {
+                    SelectedWordInformationSource fromObj = sources.get(fromPosition);
+                    sources.remove(fromPosition);
+                    sources.add(toPosition, fromObj);
+                    mArrayAdapter.notifyDataSetChanged();
+                }
             }
         });
+
+        // Configure drag behavior - handled in the adapter in new version
     }
 
     @Override
@@ -210,25 +216,24 @@ public class SourcesActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> i
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.add_sources_button:
-                addSources();
-                return true;
-            case R.id.edit_sources_button:
-                enterEditMode();
-                return true;
-            case R.id.save_sources_button:
-                exitEditMode();
-                return true;
-            case R.id.check_for_updates:
-                checkForUpdates();
-                return true;
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        } else if (id == R.id.add_sources_button) {
+            addSources();
+            return true;
+        } else if (id == R.id.edit_sources_button) {
+            enterEditMode();
+            return true;
+        } else if (id == R.id.save_sources_button) {
+            exitEditMode();
+            return true;
+        } else if (id == R.id.check_for_updates) {
+            checkForUpdates();
+            return true;
         }
-
-        return(super.onOptionsItemSelected(item));
+        return super.onOptionsItemSelected(item);
     }
 
     private void checkForUpdates() {
@@ -253,14 +258,4 @@ public class SourcesActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> i
         addSourceIntent.putExtra("language", language.getValue());
         startActivity(addSourceIntent);
     }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        SelectedWordInformationSource source = (SelectedWordInformationSource)mArrayAdapter.getItem(position);
-
-        Intent viewIntent = new Intent(this, EditSourceActivity.class);
-        viewIntent.putExtra("selectedSourceId", source.id);
-        startActivity(viewIntent);
-    }
-
 }

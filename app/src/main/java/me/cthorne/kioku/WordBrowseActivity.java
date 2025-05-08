@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivityCompat;
+import me.cthorne.kioku.orm.OrmLiteBaseActivityCompat;
 import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
@@ -70,13 +70,12 @@ public class WordBrowseActivity extends OrmLiteBaseActivityCompat<DatabaseHelper
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_word_button:
-                createEmptyWord();
-                break;
+        int id = item.getItemId();
+        if (id == R.id.add_word_button) {
+            createEmptyWord();
+            return true;
         }
-
-        return(super.onOptionsItemSelected(item));
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

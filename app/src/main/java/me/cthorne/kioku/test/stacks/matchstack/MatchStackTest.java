@@ -1,7 +1,8 @@
 package me.cthorne.kioku.test.stacks.matchstack;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import java.sql.SQLException;

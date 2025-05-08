@@ -21,7 +21,8 @@
         <activity
             android:name=".LoaderActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,22 +32,26 @@
         <activity
             android:name=".IntroActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:exported="false">
         </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:exported="false">
         </activity>
         <activity
             android:name=".RegisterActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:exported="false">
         </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:exported="false">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,11 +61,13 @@
         <activity
             android:name=".languages.AddLanguagesActivity"
             android:label="@string/title_activity_add_language"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:exported="false">
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings">
+            android:label="@string/title_activity_settings"
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -68,11 +75,13 @@
         <activity
             android:name=".infosources.SourcesActivity"
             android:label="@string/title_word_information_sources_settings"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:exported="false">
         </activity>
         <activity
             android:name=".settings.LanguageSettingsActivity"
-            android:label="@string/title_activity_language_settings">
+            android:label="@string/title_activity_language_settings"
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SettingsActivity" />
@@ -81,10 +90,12 @@
         <activity
             android:name=".infosources.AddSourcesActivity"
             android:label="Add sources"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:exported="false">
         </activity>
         <activity
-            android:name=".infosources.EditSourceActivity">
+            android:name=".infosources.EditSourceActivity"
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".infosources.AddSourcesActivity" />
@@ -92,7 +103,8 @@
 
         <activity
             android:name=".SearchActivity"
-            android:label="@string/title_activity_word_search">
+            android:label="@string/title_activity_word_search"
+            android:exported="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -104,21 +116,24 @@
         </activity>
         <activity
             android:name=".StudyActivity"
-            android:label="Study">
+            android:label="Study"
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".WordBrowseActivity"
-            android:label="@string/title_activity_word_browse">
+            android:label="@string/title_activity_word_browse"
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".SearchResultsActivity"
-            android:label="@string/title_activity_word_search_results">
+            android:label="@string/title_activity_word_search_results"
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SearchActivity" />
@@ -126,11 +141,13 @@
         <activity
             android:name=".WordViewActivity"
             android:label="@string/title_activity_word_view"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            android:exported="false">
         </activity>
         <activity
             android:name=".StatisticsActivity"
-            android:label="Statistics">
+            android:label="Statistics"
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -138,7 +155,8 @@
         <activity
             android:name=".test.WordInformationTestActivity"
             android:label="@string/title_activity_word_information_test"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StudyActivity" />
@@ -153,11 +171,12 @@
         <receiver android:name=".reminder.ReminderNotificationTimerReceiver" android:enabled="true" android:exported="false">
         </receiver>
 
-        <service android:name=".reminder.ReminderNotificationTimerService"/>
+        <service android:name=".reminder.ReminderNotificationTimerService" android:exported="false"/>
 
         <!-- Auth service -->
         <service
-            android:name="me.cthorne.kioku.auth.AuthenticatorService">
+            android:name="me.cthorne.kioku.auth.AuthenticatorService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>

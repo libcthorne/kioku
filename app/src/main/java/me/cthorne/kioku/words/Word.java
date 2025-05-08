@@ -271,4 +271,34 @@ public class Word extends SyncableItem {
         word.setCreatedAt(getCreatedAt());
         return word;
     }
+    
+    public boolean isDue() {
+        // Check if the word is due for review
+        // This is a placeholder implementation - adjust based on your app's logic
+        return true;
+    }
+    
+    public boolean isDueToday() {
+        // Check if the word is due today
+        // This is a placeholder implementation - adjust based on your app's logic
+        return true;
+    }
+    
+    public boolean isDueTomorrow() {
+        // Check if the word is due tomorrow
+        // This is a placeholder implementation - adjust based on your app's logic
+        return false;
+    }
+    
+    public boolean isDueThisWeek() {
+        // Check if the word is due this week
+        // This is a placeholder implementation - adjust based on your app's logic
+        return true;
+    }
+    
+    public boolean isDueThisMonth() {
+        // Check if the word is due this month
+        // This is a placeholder implementation - adjust based on your app's logic
+        return true;
+    }
 }

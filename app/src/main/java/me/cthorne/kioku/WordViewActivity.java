@@ -9,7 +9,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.text.Html;
 import android.text.InputType;
 import android.util.Log;
@@ -30,7 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivityCompat;
+import me.cthorne.kioku.orm.OrmLiteBaseActivityCompat;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.SqlType;
 import com.j256.ormlite.misc.TransactionManager;
@@ -256,7 +256,7 @@ public class WordViewActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         try {
             boolean wordEmpty = getHelper().getWordInformationDao().queryBuilder().where().eq("word_id", word).countOf() == 0;
 
@@ -275,75 +275,21 @@ public class WordViewActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("kioku-edit", "onOptionsItemSelected: " + item);
-
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            /*case R.id.edit_word_button:
-                enterEditMode();
-                return true;*/
-            case R.id.save_word_button:
-                saveWord();
-                return true;
-            case R.id.delete_word_button:
-                requestDeleteWord();
-                return true;
-            case R.id.search_add_button:
-                clearFocusAll();
-                return true;
-            default:
-                if (item.getGroupId() == WORD_SEARCH_MENU_GROUP) {
-                    if (item.getItemId() == WORD_SEARCH_CUSTOM) {
-                        final Activity activity = this;
-
-                        // Source: http://stackoverflow.com/a/10904665/5402565
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-
-                        // Set up the input
-                        final EditText input = new EditText(this);
-                        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                        input.setInputType(InputType.TYPE_CLASS_TEXT);
-                        input.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-                        int customSearchPaddingPx = getResources().getDimensionPixelSize(R.dimen.custom_search_padding);
-                        input.setPadding(customSearchPaddingPx, customSearchPaddingPx, customSearchPaddingPx, customSearchPaddingPx);
-                        input.setHint("Enter search term");
-                        input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                            @Override
-                            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                                    String searchTerm = input.getText().toString();
-                                    if (searchTerm.length() == 0)
-                                        return true;
-
-                                    SearchActivity.searchWord(activity, getHelper(), searchTerm, word);
-                                }
-
-                                return false;
-                            }
-                        });
-                        builder.setView(input);
-                        AlertDialog dialog = builder.create();
-
-                        WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
-                        wmlp.width = WindowManager.LayoutParams.MATCH_PARENT;
-
-                        dialog.show();
-
-                        Utils.showKeyboard(this);
-                    } else {
-                        String searchTerm = item.getTitle().toString();
-                        SearchActivity.searchWord(this, getHelper(), searchTerm, word);
-                    }
-
-                    return true;
-                }
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        } else if (id == R.id.save_word_button) {
+            saveWord();
+            return true;
+        } else if (id == R.id.delete_word_button) {
+            requestDeleteWord();
+            return true;
+        } else if (id == R.id.search_add_button) {
+            clearFocusAll();
+            return true;
         }
-
-        return(super.onOptionsItemSelected(item));
+        return super.onOptionsItemSelected(item);
     }
 
     private void clearFocusAll() {
@@ -628,7 +574,7 @@ public class WordViewActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
         //imageView.setHeight(getResources().getDimensionPixelSize(R.dimen.word_view_image_max_height));
 
         Log.d("kioku-view", "img: " + image.getFileName());
-        Picasso.with(this).load(Utils.mediaFile(this, image.getFileName())).resizeDimen(R.dimen.word_view_image_max_width, R.dimen.word_view_image_max_height)
+        Picasso.get().load(Utils.mediaFile(this, image.getFileName())).resizeDimen(R.dimen.word_view_image_max_width, R.dimen.word_view_image_max_height)
                                                                             .centerInside()
                                                                             .into(imageView);
 

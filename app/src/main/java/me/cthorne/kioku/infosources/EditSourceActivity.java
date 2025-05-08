@@ -7,19 +7,19 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.j256.ormlite.android.apptools.OrmLiteBaseActivityCompat;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 
 import me.cthorne.kioku.DatabaseHelper;
 import me.cthorne.kioku.R;
+import me.cthorne.kioku.orm.OrmLiteBaseActivityCompat;
 
 /**
  * Created by chris on 24/01/16.
@@ -75,34 +75,34 @@ public class EditSourceActivity extends OrmLiteBaseActivityCompat<DatabaseHelper
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final Context context = this;
+        int id = item.getItemId();
 
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.delete_source_button:
-                new AlertDialog.Builder(this)
-                        .setTitle("Delete source")
-                        .setMessage("Are you sure you want to delete this source?")
-                        .setNegativeButton(android.R.string.no, null)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Delete source
-                                try {
-                                    Dao<SelectedWordInformationSource, Integer> selectedSourceDao = getHelper().getSelectedWordInformationSourceDao();
-                                    selectedSourceDao.delete(selectedSource);
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
-                                    Toast.makeText(context, "Error deleting information source.", Toast.LENGTH_SHORT).show();
-                                    Log.d("kioku-sources", "error deleting information source from database");
-                                }
-
-                                finish();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        } else if (id == R.id.delete_source_button) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Delete source")
+                    .setMessage("Are you sure you want to delete this source?")
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Delete source
+                            try {
+                                Dao<SelectedWordInformationSource, Integer> selectedSourceDao = getHelper().getSelectedWordInformationSourceDao();
+                                selectedSourceDao.delete(selectedSource);
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                                Toast.makeText(context, "Error deleting information source.", Toast.LENGTH_SHORT).show();
+                                Log.d("kioku-sources", "error deleting information source from database");
                             }
-                        }).show();
 
-                return true;
+                            finish();
+                        }
+                    }).show();
+
+            return true;
         }
 
         return (super.onOptionsItemSelected(item));

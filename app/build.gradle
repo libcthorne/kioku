@@ -31,9 +31,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
-    implementation 'com.viewpagerindicator:library:2.4.1@aar'
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'com.j256.ormlite:ormlite-core:4.48'
@@ -42,7 +41,7 @@ dependencies {
     implementation 'joda-time:joda-time:2.3'
     implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
     implementation files('libs/Android-Audio.jar')
-    implementation project(':libraries:drag-sort-listview:library')
+    implementation 'com.github.woxthebox:draglistview:1.7.3'
 
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'

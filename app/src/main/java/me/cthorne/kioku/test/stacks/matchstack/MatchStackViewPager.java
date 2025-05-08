@@ -2,7 +2,7 @@ package me.cthorne.kioku.test.stacks.matchstack;
 
 import android.content.Context;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 

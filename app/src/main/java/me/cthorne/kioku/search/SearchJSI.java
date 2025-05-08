@@ -119,7 +119,7 @@ public class SearchJSI {
 
             activity.startDownload();
 
-            Picasso.with(activity)
+            Picasso.get()
                     .load(imageUrl)
                     .into(new Target() {
                         @Override
@@ -128,7 +128,8 @@ public class SearchJSI {
                         }
 
                         @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
+                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                            Log.e("kioku-js", "Image download failed: " + (e != null ? e.getMessage() : "unknown error"));
                             activity.finishDownload(null);
                         }
 

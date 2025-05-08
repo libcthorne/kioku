@@ -5,19 +5,22 @@
     android:layout_height="match_parent"
     android:background="#108DB6">
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="20dp" />
 
-    <com.viewpagerindicator.CirclePageIndicator
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/progress"
         android:layout_alignParentBottom="true"
-        android:padding="10dp"
-        app:radius="4dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent" />
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:tabMaxWidth="8dp"
+        app:tabRippleColor="@null" />
 
     <RelativeLayout
         android:id="@+id/left_button"

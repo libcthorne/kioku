@@ -18,8 +18,8 @@ public class WordImageTarget implements Target {
     }
 
     @Override
-    public void onBitmapFailed(Drawable errorDrawable) {
-        Log.d("picasso", "bitmap failed");
+    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+        Log.d("picasso", "bitmap failed: " + (e != null ? e.getMessage() : "unknown error"));
     }
 
     @Override
