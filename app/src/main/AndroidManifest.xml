@@ -69,7 +69,7 @@
             android:label="@string/title_activity_settings"
             android:exported="false">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+                android:name="androidx.core.app.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
@@ -83,7 +83,7 @@
             android:label="@string/title_activity_language_settings"
             android:exported="false">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+                android:name="androidx.core.app.PARENT_ACTIVITY"
                 android:value=".SettingsActivity" />
         </activity>
 
@@ -97,7 +97,7 @@
             android:name=".infosources.EditSourceActivity"
             android:exported="false">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+                android:name="androidx.core.app.PARENT_ACTIVITY"
                 android:value=".infosources.AddSourcesActivity" />
         </activity>
 
@@ -106,7 +106,7 @@
             android:label="@string/title_activity_word_search"
             android:exported="true">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+                android:name="androidx.core.app.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -119,7 +119,7 @@
             android:label="Study"
             android:exported="false">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+                android:name="androidx.core.app.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
@@ -127,7 +127,7 @@
             android:label="@string/title_activity_word_browse"
             android:exported="false">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+                android:name="androidx.core.app.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
@@ -135,7 +135,7 @@
             android:label="@string/title_activity_word_search_results"
             android:exported="false">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+                android:name="androidx.core.app.PARENT_ACTIVITY"
                 android:value=".SearchActivity" />
         </activity>
         <activity
@@ -149,7 +149,7 @@
             android:label="Statistics"
             android:exported="false">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+                android:name="androidx.core.app.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
@@ -158,7 +158,7 @@
             android:launchMode="singleTask"
             android:exported="false">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+                android:name="androidx.core.app.PARENT_ACTIVITY"
                 android:value=".StudyActivity" />
         </activity>
 

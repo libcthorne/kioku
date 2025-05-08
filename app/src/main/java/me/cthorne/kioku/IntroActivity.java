@@ -138,10 +138,7 @@ public class IntroActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.skip_button) {
-            finishIntro();
-            return true;
-        } else if (id == R.id.ok_button) {
+        if (id == R.id.skip_button || id == R.id.ok_button) {
             finishIntro();
             return true;
         }

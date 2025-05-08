@@ -17,9 +17,19 @@ public class LoaderActivity extends AppCompatActivity {
 
         Log.d("kioku-loader", "oncreate loaderactivity");
 
-        // Start intro activity
-        Intent introIntent = new Intent(this, IntroActivity.class);
-        startActivity(introIntent);
-        finish();
+        // Check if intro has been seen
+        boolean seenIntro = KiokuServerClient.getPreferences(this).getBoolean("seenIntro", false);
+        
+        if (!seenIntro) {
+            // Start intro activity if not seen
+            Intent introIntent = new Intent(this, IntroActivity.class);
+            startActivity(introIntent);
+            finish();
+        } else {
+            // Start main activity if intro already seen
+            Intent mainIntent = new Intent(this, MainActivity.class);
+            startActivity(mainIntent);
+            finish();
+        }
     }
 }

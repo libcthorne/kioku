@@ -114,4 +114,25 @@
             android:key="pref_unsee_hints"
             android:title="Unsee hints" />
     </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:title="Data management"
+        android:key="pref_data_management">
+        <Preference
+            android:key="pref_clear_data"
+            android:title="Clear data"
+            android:summary="Clear all application data" />
+        <Preference
+            android:key="pref_clear_cache"
+            android:title="Clear cache"
+            android:summary="Clear application cache" />
+        <Preference
+            android:key="pref_export_data"
+            android:title="Export data"
+            android:summary="Export all data" />
+        <Preference
+            android:key="pref_import_data"
+            android:title="Import data"
+            android:summary="Import data from a file" />
+    </PreferenceCategory>
 </PreferenceScreen>

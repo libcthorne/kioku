@@ -64,7 +64,7 @@ public class SettingsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
         return super.onOptionsItemSelected(item);
     }
 
-    public class SettingsFragment extends PreferenceFragment {
+    public static class SettingsFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -118,43 +118,45 @@ public class SettingsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
                 // Manage account
 
                 Preference manageAccount = findPreference("pref_account_manage");
-                manageAccount.setSummary(KiokuServerClient.getPreferences(context).getString("email", "")); // Set summary to current account's email
-                /*manageAccount.setSummary(KiokuServerClient.getPreferences(context).getString("email", "") +
-                        " (" + KiokuServerClient.getPreferences(context).getInt("currentUserId", -1) + ")"); // Set summary to current account's email*/
+                if (manageAccount != null) {
+                    manageAccount.setSummary(KiokuServerClient.getPreferences(context).getString("email", "")); // Set summary to current account's email
+                }
 
                 // Switch account
 
                 Preference switchAccount = findPreference("pref_account_switch");
-                switchAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
+                if (switchAccount != null) {
+                    switchAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
 
-                        new AlertDialog.Builder(context)
-                                .setTitle("Switch account")
-                                .setMessage("Are you sure you want to switch account? You will be logged out.")
-                                .setNegativeButton(android.R.string.no, null)
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        try {
-                                            // clear saved details
-                                            KiokuServerClient.setLoggedIn(context, ((SettingsActivity)getActivity()).getHelper(), "", "", false, new KiokuServerClient.LoginHandler() {
-                                                @Override
-                                                public void onFinish() {
-                                                    Intent intent = new Intent(context, LoginActivity.class);
-                                                    startActivity(intent);
-                                                    ((Activity)context).finish();
-                                                }
-                                            });
-                                        } catch (SQLException e) {
-                                            e.printStackTrace();
+                            new AlertDialog.Builder(context)
+                                    .setTitle("Switch account")
+                                    .setMessage("Are you sure you want to switch account? You will be logged out.")
+                                    .setNegativeButton(android.R.string.no, null)
+                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            try {
+                                                // clear saved details
+                                                KiokuServerClient.setLoggedIn(context, ((SettingsActivity)getActivity()).getHelper(), "", "", false, new KiokuServerClient.LoginHandler() {
+                                                    @Override
+                                                    public void onFinish() {
+                                                        Intent intent = new Intent(context, LoginActivity.class);
+                                                        startActivity(intent);
+                                                        ((Activity)context).finish();
+                                                    }
+                                                });
+                                            } catch (SQLException e) {
+                                                e.printStackTrace();
+                                            }
                                         }
-                                    }
-                                }).create().show();
+                                    }).create().show();
 
-                        return false;
-                    }
-                });
+                            return false;
+                        }
+                    });
+                }
 
                 // Sync
 
@@ -169,85 +171,91 @@ public class SettingsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
                 });*/
 
                 Preference forceFullSync = findPreference("pref_force_clean_sync");
-                forceFullSync.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
+                if (forceFullSync != null) {
+                    forceFullSync.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
 
-                        new AlertDialog.Builder(context)
-                                .setTitle("Clean sync")
-                                .setMessage("Are you sure you want to do a clean sync? Any changes you made since the last sync will be lost.")
-                                .setNegativeButton(android.R.string.no, null)
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // Clear all synced local tables first
-                                        try {
-                                            TableUtils.clearTable(((SettingsActivity)getActivity()).getHelper().getConnectionSource(), Word.class);
+                            new AlertDialog.Builder(context)
+                                    .setTitle("Clean sync")
+                                    .setMessage("Are you sure you want to do a clean sync? Any changes you made since the last sync will be lost.")
+                                    .setNegativeButton(android.R.string.no, null)
+                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // Clear all synced local tables first
+                                            try {
+                                                TableUtils.clearTable(((SettingsActivity)getActivity()).getHelper().getConnectionSource(), Word.class);
 
-                                            // Sync
-                                            //KiokuSync.startSync(context);
-                                            MainActivity.requestSync(context);
+                                                // Sync
+                                                //KiokuSync.startSync(context);
+                                                MainActivity.requestSync(context);
 
-                                            // Delete local media
-                                            File mediaDir = Utils.mediaDir(context);
-                                            File[] mediaFiles = mediaDir.listFiles();
-                                            if (mediaFiles != null) {
-                                                for (File mediaFile : mediaFiles) {
-                                                    if (mediaFile.delete())
-                                                        Log.d("kioku-reset", "deleted " + mediaFile.getName());
-                                                    else
-                                                        Log.e("kioku-reset", "error deleting " + mediaFile.getName());
+                                                // Delete local media
+                                                File mediaDir = Utils.mediaDir(context);
+                                                File[] mediaFiles = mediaDir.listFiles();
+                                                if (mediaFiles != null) {
+                                                    for (File mediaFile : mediaFiles) {
+                                                        if (mediaFile.delete())
+                                                            Log.d("kioku-reset", "deleted " + mediaFile.getName());
+                                                        else
+                                                            Log.e("kioku-reset", "error deleting " + mediaFile.getName());
+                                                    }
+                                                } else {
+                                                    Log.d("kioku-reset", "no media files found to delete");
                                                 }
-                                            } else {
-                                                Log.d("kioku-reset", "no media files found to delete");
+                                            } catch (SQLException e) {
+                                                e.printStackTrace();
                                             }
-                                        } catch (SQLException e) {
-                                            e.printStackTrace();
                                         }
-                                    }
-                                }).create().show();
+                                    }).create().show();
 
-                        return false;
-                    }
-                });
+                            return false;
+                        }
+                    });
+                }
 
             } else { // preferences for if not logged in
                 //preferenceScreen.removePreference(syncPreferences);
                 preferenceScreen.removePreference(signedInAccountPreferences);
 
                 Preference createAccount = findPreference("pref_account_create");
-                createAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        try {
-                            KiokuServerClient.setLoggedIn(context, null, null, null, false, null); // logout
-                        } catch (SQLException e) {
-                            e.printStackTrace();
+                if (createAccount != null) {
+                    createAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
+                            try {
+                                KiokuServerClient.setLoggedIn(context, null, null, null, false, null); // logout
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+
+                            Intent intent = new Intent(context, RegisterActivity.class);
+                            startActivity(intent);
+
+                            return false;
                         }
-
-                        Intent intent = new Intent(context, RegisterActivity.class);
-                        startActivity(intent);
-
-                        return false;
-                    }
-                });
+                    });
+                }
 
                 Preference loginAccount = findPreference("pref_account_login");
-                loginAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        try {
-                            KiokuServerClient.setLoggedIn(context, null, null, null, false, null); // logout
-                        } catch (SQLException e) {
-                            e.printStackTrace();
+                if (loginAccount != null) {
+                    loginAccount.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
+                            try {
+                                KiokuServerClient.setLoggedIn(context, null, null, null, false, null); // logout
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+
+                            Intent intent = new Intent(context, LoginActivity.class);
+                            startActivity(intent);
+
+                            return false;
                         }
-
-                        Intent intent = new Intent(context, LoginActivity.class);
-                        startActivity(intent);
-
-                        return false;
-                    }
-                });
+                    });
+                }
             }
 
             // Help preferences
@@ -267,185 +275,201 @@ public class SettingsActivity extends OrmLiteBaseActivityCompat<DatabaseHelper> 
             // Developer preferences
 
             Preference resetNextDueButton = findPreference("pref_dev_reset_next_due");
-            resetNextDueButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    new AlertDialog.Builder(context)
-                            .setTitle("Reset next due")
-                            .setMessage("Are you sure you want to reset all tests to be due for now?")
-                            .setNegativeButton(android.R.string.no, null)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    try {
-                                        Dao<WordInformationTestPerformance, Integer> wordInformationTestPerformanceDao = ((SettingsActivity)getActivity()).getHelper().getWordInformationTestPerformanceDao();
+            if (resetNextDueButton != null) {
+                resetNextDueButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        new AlertDialog.Builder(context)
+                                .setTitle("Reset next due")
+                                .setMessage("Are you sure you want to reset all tests to be due for now?")
+                                .setNegativeButton(android.R.string.no, null)
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        try {
+                                            Dao<WordInformationTestPerformance, Integer> wordInformationTestPerformanceDao = ((SettingsActivity)getActivity()).getHelper().getWordInformationTestPerformanceDao();
 
-                                        for (WordInformationTestPerformance performance : wordInformationTestPerformanceDao.queryForAll()) {
-                                            performance.resetRepetitionValues();
+                                            for (WordInformationTestPerformance performance : wordInformationTestPerformanceDao.queryForAll()) {
+                                                performance.resetRepetitionValues();
 
-                                            Log.d("kioku-reset", "nextDue: " + performance.getNextDue());
+                                                Log.d("kioku-reset", "nextDue: " + performance.getNextDue());
 
-                                            wordInformationTestPerformanceDao.update(performance);
+                                                wordInformationTestPerformanceDao.update(performance);
+                                            }
+                                        } catch (SQLException e) {
+                                            e.printStackTrace();
                                         }
-                                    } catch (SQLException e) {
-                                        e.printStackTrace();
                                     }
-                                }
-                            }).create().show();
+                                }).create().show();
 
-                    return true;
-                }
-            });
+                        return true;
+                    }
+                });
+            }
 
             Preference resetTestsButton = findPreference("pref_dev_reset_tests");
-            resetTestsButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    new AlertDialog.Builder(context)
-                            .setTitle("Delete test information")
-                            .setMessage("Are you sure you want to delete all test information?")
-                            .setNegativeButton(android.R.string.no, null)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    try {
-                                        TableUtils.clearTable(((SettingsActivity)getActivity()).getHelper().getConnectionSource(), WordInformationTestPerformance.class);
-                                        TableUtils.clearTable(((SettingsActivity)getActivity()).getHelper().getConnectionSource(), WordInformationTestAnswer.class);
-                                    } catch (SQLException e) {
-                                        e.printStackTrace();
+            if (resetTestsButton != null) {
+                resetTestsButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        new AlertDialog.Builder(context)
+                                .setTitle("Delete test information")
+                                .setMessage("Are you sure you want to delete all test information?")
+                                .setNegativeButton(android.R.string.no, null)
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        try {
+                                            TableUtils.clearTable(((SettingsActivity)getActivity()).getHelper().getConnectionSource(), WordInformationTestPerformance.class);
+                                            TableUtils.clearTable(((SettingsActivity)getActivity()).getHelper().getConnectionSource(), WordInformationTestAnswer.class);
+                                        } catch (SQLException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
-                                }
-                            }).create().show();
+                                }).create().show();
 
-                    return true;
-                }
-            });
+                        return true;
+                    }
+                });
+            }
 
             Preference unseeIntroButton = findPreference("pref_unsee_intro");
-            unseeIntroButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    KiokuServerClient.getPreferences(context).edit().putBoolean("seenIntro", false).commit();
-                    return true;
-                }
-            });
+            if (unseeIntroButton != null) {
+                unseeIntroButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        KiokuServerClient.getPreferences(context).edit().putBoolean("seenIntro", false).commit();
+                        return true;
+                    }
+                });
+            }
 
             Preference unseeHintsButton = findPreference("pref_unsee_hints");
-            unseeHintsButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    KiokuServerClient.getPreferences(context).edit().putBoolean("quadHintSeen", false).putBoolean("matchHintSeen", false).commit();
-                    return true;
-                }
-            });
+            if (unseeHintsButton != null) {
+                unseeHintsButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        KiokuServerClient.getPreferences(context).edit().putBoolean("quadHintSeen", false).putBoolean("matchHintSeen", false).commit();
+                        return true;
+                    }
+                });
+            }
 
             // Clear data
             Preference clearData = preferenceScreen.findPreference("pref_clear_data");
-            clearData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    new AlertDialog.Builder(context)
-                            .setTitle("Clear data")
-                            .setMessage("Are you sure you want to clear all data? This cannot be undone.")
-                            .setNegativeButton(android.R.string.no, null)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    try {
-                                        ((SettingsActivity)getActivity()).getHelper().clearAllTables();
+            if (clearData != null) {
+                clearData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        new AlertDialog.Builder(context)
+                                .setTitle("Clear data")
+                                .setMessage("Are you sure you want to clear all data? This cannot be undone.")
+                                .setNegativeButton(android.R.string.no, null)
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        try {
+                                            ((SettingsActivity)getActivity()).getHelper().clearAllTables();
 
-                                        Toast.makeText(context, "Data cleared", Toast.LENGTH_SHORT).show();
-                                    } catch (SQLException e) {
-                                        e.printStackTrace();
-                                        Toast.makeText(context, "Error clearing data", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context, "Data cleared", Toast.LENGTH_SHORT).show();
+                                        } catch (SQLException e) {
+                                            e.printStackTrace();
+                                            Toast.makeText(context, "Error clearing data", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            }).show();
+                                }).show();
 
-                    return true;
-                }
-            });
+                        return true;
+                    }
+                });
+            }
 
             // Clear cache
             Preference clearCache = preferenceScreen.findPreference("pref_clear_cache");
-            clearCache.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    new AlertDialog.Builder(context)
-                            .setTitle("Clear cache")
-                            .setMessage("Are you sure you want to clear the cache? This cannot be undone.")
-                            .setNegativeButton(android.R.string.no, null)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    try {
-                                        ((SettingsActivity)getActivity()).getHelper().clearCache();
+            if (clearCache != null) {
+                clearCache.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        new AlertDialog.Builder(context)
+                                .setTitle("Clear cache")
+                                .setMessage("Are you sure you want to clear the cache? This cannot be undone.")
+                                .setNegativeButton(android.R.string.no, null)
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        try {
+                                            ((SettingsActivity)getActivity()).getHelper().clearCache();
 
-                                        Toast.makeText(context, "Cache cleared", Toast.LENGTH_SHORT).show();
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                        Toast.makeText(context, "Error clearing cache", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context, "Cache cleared", Toast.LENGTH_SHORT).show();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                            Toast.makeText(context, "Error clearing cache", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            }).show();
+                                }).show();
 
-                    return true;
-                }
-            });
+                        return true;
+                    }
+                });
+            }
 
             // Export data
             Preference exportData = preferenceScreen.findPreference("pref_export_data");
-            exportData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    new AlertDialog.Builder(context)
-                            .setTitle("Export data")
-                            .setMessage("Are you sure you want to export all data? This may take a while.")
-                            .setNegativeButton(android.R.string.no, null)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    try {
-                                        ((SettingsActivity)getActivity()).getHelper().exportData();
+            if (exportData != null) {
+                exportData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        new AlertDialog.Builder(context)
+                                .setTitle("Export data")
+                                .setMessage("Are you sure you want to export all data? This may take a while.")
+                                .setNegativeButton(android.R.string.no, null)
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        try {
+                                            ((SettingsActivity)getActivity()).getHelper().exportData();
 
-                                        Toast.makeText(context, "Data exported", Toast.LENGTH_SHORT).show();
-                                    } catch (SQLException e) {
-                                        e.printStackTrace();
-                                        Toast.makeText(context, "Error exporting data", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context, "Data exported", Toast.LENGTH_SHORT).show();
+                                        } catch (SQLException e) {
+                                            e.printStackTrace();
+                                            Toast.makeText(context, "Error exporting data", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            }).show();
+                                }).show();
 
-                    return true;
-                }
-            });
+                        return true;
+                    }
+                });
+            }
 
             // Import data
             Preference importData = preferenceScreen.findPreference("pref_import_data");
-            importData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    new AlertDialog.Builder(context)
-                            .setTitle("Import data")
-                            .setMessage("Are you sure you want to import data? This will overwrite all existing data.")
-                            .setNegativeButton(android.R.string.no, null)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    try {
-                                        ((SettingsActivity)getActivity()).getHelper().importData();
+            if (importData != null) {
+                importData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        new AlertDialog.Builder(context)
+                                .setTitle("Import data")
+                                .setMessage("Are you sure you want to import data? This will overwrite all existing data.")
+                                .setNegativeButton(android.R.string.no, null)
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        try {
+                                            ((SettingsActivity)getActivity()).getHelper().importData();
 
-                                        Toast.makeText(context, "Data imported", Toast.LENGTH_SHORT).show();
-                                    } catch (SQLException e) {
-                                        e.printStackTrace();
-                                        Toast.makeText(context, "Error importing data", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context, "Data imported", Toast.LENGTH_SHORT).show();
+                                        } catch (SQLException e) {
+                                            e.printStackTrace();
+                                            Toast.makeText(context, "Error importing data", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            }).show();
+                                }).show();
 
-                    return true;
-                }
-            });
+                        return true;
+                    }
+                });
+            }
         }
     }
 

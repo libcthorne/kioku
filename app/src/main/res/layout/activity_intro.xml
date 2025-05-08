@@ -15,11 +15,15 @@
         android:id="@+id/progress"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginBottom="16dp"
         app:tabBackground="@drawable/tab_selector"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
-        app:tabMaxWidth="8dp"
+        app:tabMinWidth="10dp"
+        app:tabMaxWidth="10dp"
+        app:tabPaddingStart="4dp"
+        app:tabPaddingEnd="4dp"
         app:tabRippleColor="@null" />
 
     <RelativeLayout

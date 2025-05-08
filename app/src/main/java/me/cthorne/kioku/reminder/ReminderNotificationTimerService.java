@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.IBinder;
 import androidx.annotation.Nullable;
 
@@ -61,7 +62,14 @@ public class ReminderNotificationTimerService extends Service {
 
     private void setTimer() {
         Intent reminderNotificationIntent = new Intent(this, ReminderNotificationTimerReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, reminderNotificationIntent, 0);
+        
+        // Use FLAG_IMMUTABLE for Android 12+ compatibility
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+        
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, reminderNotificationIntent, flags);
 
         Calendar calendar = Calendar.getInstance();
 
@@ -80,7 +88,14 @@ public class ReminderNotificationTimerService extends Service {
 
     private void cancelTimer() {
         Intent reminderNotificationIntent = new Intent(this, ReminderNotificationTimerReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, reminderNotificationIntent, 0);
+        
+        // Use FLAG_IMMUTABLE for Android 12+ compatibility
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+        
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, reminderNotificationIntent, flags);
 
         // Cancel alarm
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
