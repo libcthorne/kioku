@@ -9,10 +9,13 @@ android {
     defaultConfig {
         applicationId "me.cthorne.kioku"
         minSdk 14
-        targetSdk 33
-        versionCode 52
-        versionName "0.52"
+        targetSdk 34
+        versionCode 70
+        versionName "0.70"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Enable multidex support
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -42,6 +45,9 @@ dependencies {
     implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
     implementation files('libs/Android-Audio.jar')
     implementation 'com.github.woxthebox:draglistview:1.7.3'
+    
+    // Add multidex dependency
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
